@@ -32,6 +32,7 @@ class App extends React.Component{
             })
             .catch(e => {
                 this.setState({ isServiceOnline: false });
+                throw "Service is not available";
             });
     }
 
@@ -39,7 +40,9 @@ class App extends React.Component{
         const url = new URL(API_SERVICES.entries, API_HOST);
         return fetch(PROXY_URL + url)
             .then(response => response.json())
-            .catch(e => console.log(e));
+            .catch(() => {
+                throw "Error in getting entries";
+            });
     }
 
     render() {
